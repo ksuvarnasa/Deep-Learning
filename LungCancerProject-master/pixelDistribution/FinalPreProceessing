@@ -1,0 +1,29 @@
+import dicom
+import os
+import pandas as pd
+import numpy as np
+import json
+
+
+
+final_matrix = []
+
+for patient in patients[:1]:
+    ct_scan = read_ct_scan(data_dir + patient + '/')
+    segmented_ct_scan = segment_lung_from_ct_scan(ct_scan)
+    #print(segmented_ct_scan[1])
+    item = {"id": patient}
+    for slice in segmented_ct_scan[:1]:
+        x = slice
+        unique, counts = np.unique(x, return_counts=True)
+        freq_mat= np.asarray((unique, counts)).T
+        #print(freq_mat)
+        for i in range[:4095]:
+            for each in freq_mat:
+                if(each[0] == i):
+                    item[str(each[0])] = each[1]
+                else:
+                    item[str(i)] = 0
+        final_matrix.append(item)
+
+print(final_matrix)
